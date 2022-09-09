@@ -1,0 +1,27 @@
+{
+  "name": "y",
+  "version": "1.0.0",
+  "description": "Create a persistent to-do list where the user can create and organize tasks into seperate lists.  Employ JS concepts such as modules, OOP, and DOM manipulation while using webpack.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "watch": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Applefrittr/to-do-list.git"
+  },
+  "author": "Applefrittr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Applefrittr/to-do-list/issues"
+  },
+  "homepage": "https://github.com/Applefrittr/to-do-list#readme",
+  "devDependencies": {
+    "css-loader": "^6.7.1",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  }
+}
