@@ -15,11 +15,9 @@
         <div id="navSideBar">
             <div class="navContainer" id="navDates">
                 <h2>All</h2>
-                <ul>
-                    <li class="underline">Today</li>
-                    <li class="underline">This Week</li>
-                    <li class="underline">This Month</li>
-                </ul>
+                <h4>Today</h3>
+                <h4>This Week</h3>
+                <h4>This Month</h3>
             </div>
             <div class="navContainer" id="navLists">
                 <h2>Lists</h2>
@@ -28,7 +26,32 @@
             </div>
         </div>
         <div id="list">
-
+                <div id="newToDo">New To-Dos go here</div>
+                <button id="addNewToDo">Add new To-Do</button>
+        </div>
+        
+        <div class="modal">
+            <div id="createToDoWindow">
+                <form action="" id="formToDo">
+                    <div>
+                        <label for="name">Name</label>
+                        <input type="text" id="name">
+                    </div>
+                    <div>
+                        <label for="description">Description</label>
+                        <input type="text" id="description">
+                    </div>
+                    <div>
+                        <label for="dueDate">Due Date</label>
+                        <input type="date" id="dueDate">
+                    </div>
+                    <div>
+                        <label for="priority">High Priority</label>
+                        <input type="checkbox" id="priority">
+                    </div>
+                </form>
+                <button id="createToDo">Close</button>
+            </div>
         </div>
     </div>
 </body>

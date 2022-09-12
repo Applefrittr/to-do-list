@@ -45,31 +45,42 @@ body    {
     gap: 3rem;
 }
 
-#navSideBar::after    {
-    content: "";
-    position:absolute;
-    border-right: solid darkred 2px;
-    display: block;
-    right: -8px;
-    left: -8px;
-    top: 0;
-    bottom: 0;
-}
-
-ul  {
-    list-style-type: none;
-    margin: 0;
-    padding: 0 1rem;
-}
-
-li:not(:last-child) {
+.navContainer>h4    {
+    margin-left: 1rem;
     margin-bottom: 1rem;
-}
-
- li.underline:hover  {
-    text-decoration: underline;
 }
 
 h2  {
     margin-bottom: 1rem;
+}
+
+h2:hover,
+h4:hover     {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.modal  {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, .3);
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.modal>#createToDoWindow    {
+    width: 700px;
+    height: 325px;
+    background-color: white;
+}
+
+.todo   {
+    background-color: turquoise;
+    display: flex;
+    width: 100%;
+    padding: 1rem 3rem;
 }
