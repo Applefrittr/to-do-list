@@ -30,6 +30,7 @@
                 <button id="addNewToDo">Add new To-Do</button>
         </div>
         
+        <!-- The create new to-do modal -->
         <div class="modal">
             <div id="createToDoWindow">
                 <form action="" id="formToDo">
@@ -51,6 +52,31 @@
                     </div>
                 </form>
                 <button id="createToDo">Close</button>
+            </div>
+        </div>
+
+        <!-- The edit existing to-do modal -->
+        <div class="modal" id="editModal">
+            <div id="editToDoWindow">
+                <form action="" id="formEditToDo">
+                    <div>
+                        <label for="name">Name</label>
+                        <input type="text" id="name">
+                    </div>
+                    <div>
+                        <label for="description">Description</label>
+                        <input type="text" id="description">
+                    </div>
+                    <div>
+                        <label for="dueDate">Due Date</label>
+                        <input type="date" id="dueDate">
+                    </div>
+                    <div>
+                        <label for="priority">High Priority</label>
+                        <input type="checkbox" id="priority">
+                    </div>
+                </form>
+                <button id="editToDo">Close</button>
             </div>
         </div>
     </div>

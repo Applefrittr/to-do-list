@@ -60,6 +60,11 @@ h4:hover     {
     cursor: pointer;
 }
 
+#list   {
+    padding-top: 10rem;
+    padding-left: 2rem;
+}
+
 .modal  {
     display: none;
     justify-content: center;
@@ -79,8 +84,18 @@ h4:hover     {
 }
 
 .todo   {
-    background-color: turquoise;
     display: flex;
     width: 100%;
     padding: 1rem 3rem;
+    justify-content: space-between;
+}
+
+.todobox    {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.complete   {
+    opacity: 0.5;
 }

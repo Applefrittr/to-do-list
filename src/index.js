@@ -1,27 +1,27 @@
 import './style.css'
-import {ToDo} from './objects.js'
+import {ToDo, ALL} from './objects.js'
 import {createToDoItem} from './DOM.js'
 
 const newToDo = document.querySelector('#addNewToDo')
-const modal = document.querySelector('.modal')
+const createModal = document.querySelector('.modal')
 const createToDo = document.querySelector('#createToDo')
 const formToDo = document.querySelector('#formToDo')
 const list = document.querySelector('#newToDo')
 
+// Activate form modal for user to add a new to-do
 newToDo.addEventListener('click', () => {
-    modal.style.display = 'flex'
+    createModal.style.display = 'flex'
 })
 
+// Closes modal then captures user input and creates a new to-do object along with it's DOM representation
 createToDo.addEventListener('click', () => {
-    modal.style.display = 'none'
-    //console.log(Object.values(formToDo.elements))
-    //console.log(Object.values(formToDo.elements).map(x => x.type == 'checkbox' ? x.checked : x.value))
-    let todo = Object.values(formToDo.elements).map(x => x.type == 'checkbox' ? x.checked : x.value)
-    let todoObj = ToDo(todo)
-    let ele = createToDoItem(todoObj)
+    createModal.style.display = 'none'
+    let todo = Object.values(formToDo.elements).map(x => x.type == 'checkbox' ? x.checked : x.value),
+        todoObj = ToDo(todo),
+        ele = createToDoItem(todoObj)
+    ALL.push(todoObj)
     list.appendChild(ele)
-
-    let del = document.querySelector('#del')
-    del.addEventListener('click', () => todoObj.del(ele))
+    
     formToDo.reset()
 })
+console.log(ALL)
