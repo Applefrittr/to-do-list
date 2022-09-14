@@ -1,12 +1,16 @@
 import './style.css'
 import {ToDo, ALL} from './objects.js'
 import {createToDoItem} from './DOM.js'
+import {bgModalWindow} from './background.js'
 
 const newToDo = document.querySelector('#addNewToDo')
 const createModal = document.querySelector('.modal')
 const createToDo = document.querySelector('#createToDo')
 const formToDo = document.querySelector('#formToDo')
 const list = document.querySelector('#newToDo')
+
+
+bgModalWindow()
 
 // Activate form modal for user to add a new to-do
 newToDo.addEventListener('click', () => {
