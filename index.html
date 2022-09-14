@@ -32,51 +32,51 @@
         
         <!-- The create new to-do modal -->
         <div class="modal">
-            <div id="createToDoWindow">
+            <div id="createToDoWindow" class="modalWindow">
                 <form action="" id="formToDo">
-                    <div>
-                        <label for="name">Name</label>
-                        <input type="text" id="name">
+                    <div class="inputs">
+                        <input type="text" id="name" placeholder="Task name...">
                     </div>
-                    <div>
-                        <label for="description">Description</label>
-                        <input type="text" id="description">
+                    <div class="inputs">
+                        <textarea id="description" rows="9" placeholder="Notes..."></textarea>
                     </div>
-                    <div>
-                        <label for="dueDate">Due Date</label>
-                        <input type="date" id="dueDate">
+                    <div class="datePrioBox">
+                        <div>
+                            <label for="dueDate">Due Date</label>
+                            <input type="date" id="dueDate">
+                        </div>
+                        <div>
+                            <label for="priority">High Priority</label>
+                            <input type="checkbox" id="priority">
+                        </div>
                     </div>
-                    <div>
-                        <label for="priority">High Priority</label>
-                        <input type="checkbox" id="priority">
-                    </div>
+                    <button id="createToDo" type="button">Close</button>
                 </form>
-                <button id="createToDo">Close</button>
             </div>
         </div>
 
         <!-- The edit existing to-do modal -->
         <div class="modal" id="editModal">
-            <div id="editToDoWindow">
+            <div id="editToDoWindow" class="modalWindow">
                 <form action="" id="formEditToDo">
-                    <div>
-                        <label for="name">Name</label>
+                    <div class="inputs">
                         <input type="text" id="name">
                     </div>
-                    <div>
-                        <label for="description">Description</label>
-                        <input type="text" id="description">
+                    <div class="inputs">
+                        <textarea id="description" rows="9"></textarea>
                     </div>
-                    <div>
-                        <label for="dueDate">Due Date</label>
-                        <input type="date" id="dueDate">
+                    <div class="datePrioBox">
+                        <div>
+                            <label for="dueDate">Due Date</label>
+                            <input type="date" id="dueDate">
+                        </div>
+                        <div>
+                            <label for="priority">High Priority</label>
+                            <input type="checkbox" id="priority">
+                        </div>
                     </div>
-                    <div>
-                        <label for="priority">High Priority</label>
-                        <input type="checkbox" id="priority">
-                    </div>
+                    <button id="editToDo" type="button">Close</button>
                 </form>
-                <button id="editToDo">Close</button>
             </div>
         </div>
     </div>
