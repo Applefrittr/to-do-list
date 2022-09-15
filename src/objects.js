@@ -2,8 +2,12 @@ const modal = document.querySelector('#editModal')
 const form = document.querySelector('#formEditToDo')
 const edit = document.querySelector('#editToDo')
 
+// To-Do items are represented as objects.  Lists will be arrays which contain the To-Do objects
 
 export const ALL = [] // List that will contain ALL to-dos
+export const TODAY = [] // List that contiains to-do objects due today, this week, and this month
+export const WEEK = []
+export const MONTH = []
 
 
 // to-do factory function, 4 attributes and 2 methods.  Parameter 'array' passed is a collection of the values pulled from input form createToDo provided by user
@@ -14,6 +18,7 @@ export function ToDo(array) {
         'description': array[1],
         'dueDate': array[2],
         'priority': array[3],
+        'completed': false,
         del(todo)   {
             todo.parentNode.removeChild(todo)
             let remove = ALL.indexOf(todo)
@@ -40,4 +45,13 @@ export function ToDo(array) {
             return this
         }
     }
+}
+
+// This function organizes the param To-Do obj into the correct due-date list
+export function Schedule(obj)  {
+    let today = new Date(),
+        due = new Date(obj.dueDate)
+    if (due.getDate() + 1 == today.getDate()) TODAY.push(obj)
+    if (due.getDate() + 1 <= today.getDate() + 7) WEEK.push(obj)
+    if (due.getMonth() == today.getMonth()) MONTH.push(obj)
 }

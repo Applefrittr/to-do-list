@@ -106,13 +106,13 @@ h4:hover     {
 }
 
 .complete   {
-    opacity: 0.5;
+    color: gray;
 }
 
 form    {
     position: absolute;
     z-index: 1;
-    top: 2rem;
+    top: 1.5rem;
     display:flex;
     flex-direction: column;
     gap: 1rem;
@@ -137,3 +137,36 @@ form>button {
     width: 100px;
 }
 
+input,
+textarea    {
+    border: solid gray 1px;
+    padding: 5px;
+    resize: none;
+}
+
+input[type="checkbox"]  {
+    appearance: none;
+    position: relative;
+    border: solid gray 1px;
+    border-radius: 50%;
+    height: auto;
+    color: navy;    
+}
+
+input[type="checkbox"]::before {
+    content: "✔";
+    position: absolute;
+    font-size: 1.5rem;
+    right: -10px;
+    top: -1rem;
+    visibility: hidden;
+}
+
+input[type="checkbox"]:checked::before {
+      visibility: visible;
+}
+
+.selected::after {
+    font-size: 1rem;
+    content: ' >>>'
+}

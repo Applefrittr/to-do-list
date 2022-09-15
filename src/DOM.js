@@ -3,8 +3,7 @@ import {ALL} from './objects.js'
 const editBtn = document.querySelector('#editToDo')
 
 // DOM created element which represents a to-do object.  Edit and Delete buttons call methods repsectively from the to-do object itself and update DOM accordingly
-export function createToDoItem(obj) {
-    console.log(ALL)
+export function CreateToDoItem(obj) {
     let newItem = document.createElement('div')
     newItem.classList.add('todo')
 
@@ -13,8 +12,15 @@ export function createToDoItem(obj) {
 
     let checkbox = document.createElement('input')
     checkbox.type = 'checkbox'
+    if (obj.completed) {
+        checkbox.checked = true
+        newItem.classList.add('complete')
+    }
 
-    checkbox.addEventListener('click', () => newItem.classList.toggle('complete'))
+    checkbox.addEventListener('click', () => {
+        newItem.classList.toggle('complete')
+        obj.completed = !obj.completed
+    })
 
     let newItemName = document.createElement('p')
     newItemName.textContent = obj.name
@@ -46,9 +52,25 @@ export function createToDoItem(obj) {
     box2.appendChild(newItemDate)
     box2.appendChild(edit)
     box2.appendChild(del)
+
+    let descptPreview = document.createElement('div')
+    descptPreview.textContent = obj.description.slice(0, 30) + '...'
     
     newItem.appendChild(box1)
+    newItem.appendChild(descptPreview)
     newItem.appendChild(box2)
 
     return newItem
+}
+
+export function ClearList(element)  {
+    while(element.lastChild)   {
+        element.removeChild(element.lastChild)
+    }
+}
+
+export function Selected(list)  {
+    let notSelected = document.querySelector('.selected')
+    notSelected.classList.remove('selected')
+    list.classList.add('selected')
 }
