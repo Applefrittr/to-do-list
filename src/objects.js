@@ -8,6 +8,7 @@ export const ALL = [] // List that will contain ALL to-dos
 export const TODAY = [] // List that contiains to-do objects due today, this week, and this month
 export const WEEK = []
 export const MONTH = []
+export const PROJECTS = []
 
 
 // to-do factory function, 4 attributes and 2 methods.  Parameter 'array' passed is a collection of the values pulled from input form createToDo provided by user
@@ -47,11 +48,24 @@ export function ToDo(array) {
     }
 }
 
+// Project class.  An Object w/ 'name' and 'notes' elements, as well as a 'tasks' array, which holds that projects ToDo Objects.  The 'selected' boolean is used to push new ToDo's in the objects 'tasks' array
+export class Project {
+    constructor(array) {
+        this.name = array[0]
+        this.notes = array[1]
+        this.tasks = []
+        this.selected = false
+        PROJECTS.push(this)
+    }
+}
+
+
 // This function organizes the param To-Do obj into the correct due-date list
 export function Schedule(obj)  {
     let today = new Date(),
         due = new Date(obj.dueDate)
     if (due.getDate() + 1 == today.getDate()) TODAY.push(obj)
-    if (due.getDate() + 1 <= today.getDate() + 7) WEEK.push(obj)
+    let week = today.setDate(today.getDate() + 7)
+    if (due <= week) WEEK.push(obj)
     if (due.getMonth() == today.getMonth()) MONTH.push(obj)
 }

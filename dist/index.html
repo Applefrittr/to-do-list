@@ -21,9 +21,8 @@
             </div>
             <div class="navContainer" id="navLists">
                 <h2>Lists</h2>
-                <div id="newLists">New Lists added here</div>
-                <p class="test">TEST</p>
-                <button id="addNewList">Add new List</button>
+                <div id="newProjects"></div>
+                <button id="addProject">Add new List</button>
             </div>
         </div>
         <div id="list">
@@ -35,6 +34,7 @@
         <!-- The create new to-do modal -->
         <div class="modal">
             <div id="createToDoWindow" class="modalWindow">
+                <legend>New*</legend>
                 <form action="" id="formToDo">
                     <div class="inputs">
                         <input type="text" id="name" placeholder="Task name...">
@@ -60,6 +60,7 @@
         <!-- The edit existing to-do modal -->
         <div class="modal" id="editModal">
             <div id="editToDoWindow" class="modalWindow">
+                <legend>Edit</legend>
                 <form action="" id="formEditToDo">
                     <div class="inputs">
                         <input type="text" id="name">
@@ -78,6 +79,22 @@
                         </div>
                     </div>
                     <button id="editToDo" type="button">Close</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Create New Project Modal-->
+        <div class="modal" id="projectModal">
+            <div id="projectWindow" class="modalWindow">
+                <legend>New List*</legend>
+                <form action="" id="formProject">
+                    <div class="inputs">
+                        <input type="text" id="name" placeholder="List name..." maxlength="15">
+                    </div>
+                    <div class="inputs">
+                        <textarea id="description" rows="9" placeholder="Notes..."></textarea>
+                    </div>
+                    <button id="newProject" type="button">Close</button>
                 </form>
             </div>
         </div>

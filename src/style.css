@@ -45,7 +45,8 @@ body    {
     gap: 3rem;
 }
 
-.navContainer>h4    {
+.navContainer>h4 ,
+#newProjects>h4    {
     margin-left: 1rem;
     margin-bottom: 1rem;
 }

@@ -1,5 +1,3 @@
-import {ALL} from './objects.js'
-
 const editBtn = document.querySelector('#editToDo')
 
 // DOM created element which represents a to-do object.  Edit and Delete buttons call methods repsectively from the to-do object itself and update DOM accordingly
@@ -61,6 +59,14 @@ export function CreateToDoItem(obj) {
     newItem.appendChild(box2)
 
     return newItem
+}
+
+///////
+export function CreateProject(obj)    {
+    let newList = document.createElement('h4')
+    newList.textContent = obj.name
+
+    return newList
 }
 
 export function ClearList(element)  {

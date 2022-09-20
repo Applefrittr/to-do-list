@@ -1,6 +1,6 @@
 import './style.css'
-import {ToDo, Schedule, ALL, TODAY, WEEK, MONTH } from './objects.js'
-import {CreateToDoItem, ClearList, Selected} from './DOM.js'
+import {ToDo, Project, Schedule, ALL, TODAY, WEEK, MONTH, PROJECTS } from './objects.js'
+import {CreateToDoItem, ClearList, Selected, CreateProject} from './DOM.js'
 import {bgModalWindow} from './background.js'
 
 const newToDo = document.querySelector('#addNewToDo')
@@ -8,11 +8,15 @@ const createModal = document.querySelector('.modal')
 const createToDo = document.querySelector('#createToDo')
 const formToDo = document.querySelector('#formToDo')
 const list = document.querySelector('#newToDo')
-//const test = document.querySelector('.test')
 const allList = document.querySelector('#all')
 const todayList = document.querySelector('#today')
 const weekList = document.querySelector('#week')
 const monthList = document.querySelector('#month')
+const newProject = document.querySelector('#addProject')
+const projectModal = document.querySelector('#projectModal')
+const createProject = document.querySelector('#newProject')
+const formProject = document.querySelector('#formProject')
+const projects = document.querySelector('#newProjects')
 
 bgModalWindow() // add index card styling to modal windows, called from background.js
 
@@ -28,22 +32,18 @@ createToDo.addEventListener('click', () => {
         todoObj = ToDo(todo),
         ele = CreateToDoItem(todoObj)
     ALL.push(todoObj)       // push new to-do to default ALL list
+    PROJECTS.forEach(project => project.selected == true ? project.tasks.push(todoObj) : '') // if custom project selected, add to that list as well
     Schedule(todoObj)       // call Schedule from objects.js, will add new to-do into due-date lists
     list.appendChild(ele)
     
     formToDo.reset()
-    console.log(ALL,TODAY)
+    console.log(ALL,TODAY, WEEK, MONTH)
 })
-
-// test.addEventListener('click', () => {
-//     while(list.lastChild)   {
-//         list.removeChild(list.lastChild)
-//     }
-// })
 
 allList.addEventListener('click',() => {
     ClearList(list)
     Selected(allList)
+    PROJECTS.forEach(project => project.selected = false)
     ALL.forEach(obj => {
         let ele = CreateToDoItem(obj)
         list.appendChild(ele)
@@ -53,7 +53,7 @@ allList.addEventListener('click',() => {
 todayList.addEventListener('click', () => {
     ClearList(list)
     Selected(todayList)
-    weekList
+    PROJECTS.forEach(project => project.selected = false)
     TODAY.forEach(obj => {
         let ele = CreateToDoItem(obj)
         list.appendChild(ele)
@@ -63,6 +63,7 @@ todayList.addEventListener('click', () => {
 weekList.addEventListener('click', () => {
     ClearList(list)
     Selected(weekList)
+    PROJECTS.forEach(project => project.selected = false)
     WEEK.forEach(obj => {
         let ele = CreateToDoItem(obj)
         list.appendChild(ele)
@@ -72,18 +73,33 @@ weekList.addEventListener('click', () => {
 monthList.addEventListener('click', () => {
     ClearList(list)
     Selected(monthList)
+    PROJECTS.forEach(project => project.selected = false)
     MONTH.forEach(obj => {
         let ele = CreateToDoItem(obj)
         list.appendChild(ele)
     })
 })
 
+newProject.addEventListener('click', () => {
+    projectModal.style.display = 'flex'
+})
 
-
-// console.log(ALL)
-// let a = new Date()
-// let b = new Date(a.getFullYear(), a.getMonth(), a.getDate() + 7)
-// console.log(a)
-// console.log(b)
-// let y = new Date("2022-09-16")
-// console.log(y)
+createProject.addEventListener('click', () =>  {
+    projectModal.style.display = 'none'
+    let project = Object.values(formProject.elements).map(x => x.value),
+        projectObj = new Project(project),
+        ele = CreateProject(projectObj)
+    projects.appendChild(ele)
+    ele.addEventListener('click', () => {
+        ClearList(list)
+        Selected(ele)
+        PROJECTS.forEach(project => project.selected = false)
+        projectObj.selected = true
+        projectObj.tasks.forEach(obj => {
+            let todo = CreateToDoItem(obj)
+            list.appendChild(todo)
+        })
+    })
+    formProject.reset()
+    console.log(PROJECTS)
+})
