@@ -24,6 +24,12 @@ export function CreateToDoItem(obj) {
     newItemName.textContent = obj.name
 
     box1.appendChild(checkbox)
+    if (obj.color)    {
+        let color = document.createElement('div')
+        color.classList.add('todo-project-color')
+        color.style.backgroundColor = obj.color
+        box1.appendChild(color)
+    }
     box1.appendChild(newItemName)
 
     let box2 = document.createElement('div')
@@ -61,20 +67,32 @@ export function CreateToDoItem(obj) {
     return newItem
 }
 
-///////
+// Project DOM element.  Used to represent the Project Objects created by the user and displayed on-screen
 export function CreateProject(obj)    {
-    let newList = document.createElement('h4')
-    newList.textContent = obj.name
+    let newProject = document.createElement('div')
+    newProject.style.display = 'flex'
 
-    return newList
+    let projectColor = document.createElement('div')
+    projectColor.classList.add('project-color')
+    projectColor.style['background-color'] = obj.color
+    
+    let projectName = document.createElement('h4')
+    projectName.textContent = obj.name
+    
+    newProject.appendChild(projectColor)
+    newProject.appendChild(projectName)
+
+    return newProject
 }
 
+// Deletes the DOM to-do's displayed on-screen
 export function ClearList(element)  {
     while(element.lastChild)   {
         element.removeChild(element.lastChild)
     }
 }
 
+// Add's the '>>>' to the current user selected list or project
 export function Selected(list)  {
     let notSelected = document.querySelector('.selected')
     notSelected.classList.remove('selected')

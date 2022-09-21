@@ -46,7 +46,7 @@ body    {
 }
 
 .navContainer>h4 ,
-#newProjects>h4    {
+#newProjects>div    {
     margin-left: 1rem;
     margin-bottom: 1rem;
 }
@@ -56,14 +56,23 @@ h2  {
 }
 
 h2:hover,
-h4:hover     {
+h4:hover    {
     text-decoration: underline;
     cursor: pointer;
+}
+
+#list-header    {
+    padding-bottom: 2rem;
 }
 
 #list   {
     padding-top: 10rem;
     padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+#addNewToDo {
+    margin-top: 2rem;
 }
 
 .modal  {
@@ -98,6 +107,14 @@ h4:hover     {
     width: 100%;
     padding: 1rem 3rem;
     justify-content: space-between;
+    position: relative;
+    transition: transform .5s, border 2s;
+}
+
+.todo:hover {
+    transform: scale(1.01, 1.10);
+    border: solid 1px black;
+    box-shadow: 2px 2px 5px black;
 }
 
 .todobox    {
@@ -171,3 +188,17 @@ input[type="checkbox"]:checked::before {
     font-size: 1rem;
     content: ' >>>'
 }
+
+.project-color  {
+    padding: 5px;
+    height: auto;
+    margin-right: 5px;
+}
+
+.todo-project-color {
+    padding: 5px;
+    height: 100%;
+    display: inline-block;
+    margin-right: -10px;
+}
+

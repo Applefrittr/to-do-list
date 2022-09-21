@@ -11,7 +11,7 @@ export const MONTH = []
 export const PROJECTS = []
 
 
-// to-do factory function, 4 attributes and 2 methods.  Parameter 'array' passed is a collection of the values pulled from input form createToDo provided by user
+// to-do factory function, 5 attributes and 2 methods.  Parameter 'array' passed is a collection of the values pulled from input form createToDo provided by user
 export function ToDo(array) {
 
     return  {
@@ -20,6 +20,7 @@ export function ToDo(array) {
         'dueDate': array[2],
         'priority': array[3],
         'completed': false,
+        'color':null,
         del(todo)   {
             todo.parentNode.removeChild(todo)
             let remove = ALL.indexOf(todo)
@@ -53,6 +54,7 @@ export class Project {
     constructor(array) {
         this.name = array[0]
         this.notes = array[1]
+        this.color = array[2]
         this.tasks = []
         this.selected = false
         PROJECTS.push(this)
