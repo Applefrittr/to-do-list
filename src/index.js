@@ -1,7 +1,8 @@
 import './style.css'
-import {ToDo, Project, Schedule, ALL, TODAY, WEEK, MONTH, PROJECTS} from './objects.js'
+import {ToDo, Project, Schedule, TODAY, WEEK, MONTH, PROJECTS} from './objects.js'
 import {CreateToDoItem, ClearList, Selected, CreateProject} from './DOM.js'
 import {bgModalWindow} from './background.js'
+import {Store} from './storage.js'
 
 const newToDo = document.querySelector('#addNewToDo')
 const createModal = document.querySelector('.modal')
@@ -19,19 +20,31 @@ const formProject = document.querySelector('#formProject')
 const projects = document.querySelector('#newProjects')
 const listHeader = document.querySelector('#list-header')
 
+
+
 bgModalWindow() // add index card styling to modal windows, called from background.js
+
+
+/////////////////  Storage API retrieval on page load //////////////////////
+
+//localStorage.clear()
+export const ALL = InitializeDefaultList() // Initalize the ALL default list
+if(!localStorage.getItem('ALL')) localStorage.setItem('ALL', JSON.stringify(ALL))
+
+
 
 // Activate form modal for user to add a new to-do
 newToDo.addEventListener('click', () => {
     createModal.style.display = 'flex'
 })
 
-// Closes modal then captures user input and creates a new to-do object along with it's DOM representation
+// Closes modal then captures user input and creates a new to-do object along with it's DOM representation.  Also stores newly created object in local storage element 'ALL'
 createToDo.addEventListener('click', () => {
     createModal.style.display = 'none'
     let todo = Object.values(formToDo.elements).map(x => x.type == 'checkbox' ? x.checked : x.value),
         todoObj = ToDo(todo)
     ALL.push(todoObj)       // push new to-do to default ALL list
+    Store('ALL', todoObj)   // store newly created object in localStorage
     // if custom project selected, add to that list as well
     PROJECTS.forEach(project =>     {
         if (project.selected == true)   {
@@ -123,3 +136,20 @@ createProject.addEventListener('click', () =>  {
     formProject.reset()
     console.log(projectObj)
 })
+
+export function InitializeDefaultList()    {
+    let objArray = []
+    if( localStorage.getItem('ALL') )   {
+        let data = JSON.parse(localStorage.getItem('ALL') || [])
+        // for each data object in stored array, create a ToDo object and it's DOM element as well as call Schedule to oraganize by due date arrays
+        data.forEach(item => {
+            let array = Object.values(item),
+                obj = ToDo(array),
+                ele = CreateToDoItem(obj)
+            objArray.push(obj)
+            Schedule(obj)
+            list.appendChild(ele)
+        })
+    }
+    return objArray
+} 

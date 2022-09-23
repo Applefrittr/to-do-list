@@ -1,10 +1,11 @@
+import { ALL } from "./index.js"
+
 const modal = document.querySelector('#editModal')
 const form = document.querySelector('#formEditToDo')
 const edit = document.querySelector('#editToDo')
 
 // To-Do items are represented as objects.  Lists will be arrays which contain the To-Do objects
 
-export const ALL = [] // List that will contain ALL to-dos
 export const TODAY = [] // List that contiains to-do objects due today, this week, and this month
 export const WEEK = []
 export const MONTH = []
@@ -23,8 +24,9 @@ export function ToDo(array) {
         'color':null,
         del(todo)   {
             todo.parentNode.removeChild(todo)
-            let remove = ALL.indexOf(todo)
-            ALL.splice(remove - 1,1)
+            let remove = ALL.indexOf(this)
+            ALL.splice(remove, 1)
+            localStorage.setItem('ALL', JSON.stringify(ALL))
         },
         edit()  {
             modal.style.display ='flex'
@@ -37,13 +39,16 @@ export function ToDo(array) {
             // each time it is clicked, tying it to the current to-do obj for modification.  Eventlisteners would have linked all objects together and edits would 
             // happen to several objects at once.
             edit.onclick = () => {
+                console.log(this, ALL)
+                let update = ALL.indexOf(this)
                 this.name = form.elements[0].value
                 this.description = form.elements[1].value
                 this.dueDate = form.elements[2].value
                 this.priority = form.elements[3].checked
                 modal.style.display = 'none'
+                ALL[update] = this
+                localStorage.setItem('ALL', JSON.stringify(ALL))
             }
-
             return this
         }
     }
