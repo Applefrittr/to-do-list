@@ -51,7 +51,7 @@ export function CreateToDoItem(obj) {
     
     let del = document.createElement('button')
     del.textContent = 'Delete'
-    del.addEventListener('click', () => obj.del(newItem))
+    del.onclick = () => obj.del(newItem)
 
     box2.appendChild(newItemDate)
     box2.appendChild(edit)

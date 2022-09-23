@@ -1,4 +1,4 @@
-import { ALL } from "./index.js"
+import { ALL, PROJECTS } from "./index.js"
 
 const modal = document.querySelector('#editModal')
 const form = document.querySelector('#formEditToDo')
@@ -9,7 +9,7 @@ const edit = document.querySelector('#editToDo')
 export const TODAY = [] // List that contiains to-do objects due today, this week, and this month
 export const WEEK = []
 export const MONTH = []
-export const PROJECTS = []
+
 
 
 // to-do factory function, 5 attributes and 2 methods.  Parameter 'array' passed is a collection of the values pulled from input form createToDo provided by user
@@ -21,12 +21,19 @@ export function ToDo(array) {
         'dueDate': array[2],
         'priority': array[3],
         'completed': false,
-        'color':null,
         del(todo)   {
             todo.parentNode.removeChild(todo)
             let remove = ALL.indexOf(this)
             ALL.splice(remove, 1)
             localStorage.setItem('ALL', JSON.stringify(ALL))
+            PROJECTS.forEach(project => {
+                remove = project.tasks.indexOf(this)
+                console.log(remove)
+                if (remove > -1) project.tasks.splice(remove, 1)
+                console.log(project, project.tasks)
+            })
+            localStorage.setItem('PROJECTS', JSON.stringify(PROJECTS))
+            console.log(PROJECTS, ALL)
         },
         edit()  {
             modal.style.display ='flex'
@@ -62,7 +69,6 @@ export class Project {
         this.color = array[2]
         this.tasks = []
         this.selected = false
-        PROJECTS.push(this)
     }
 }
 

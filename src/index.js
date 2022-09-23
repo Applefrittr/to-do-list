@@ -1,5 +1,5 @@
 import './style.css'
-import {ToDo, Project, Schedule, TODAY, WEEK, MONTH, PROJECTS} from './objects.js'
+import {ToDo, Project, Schedule, TODAY, WEEK, MONTH} from './objects.js'
 import {CreateToDoItem, ClearList, Selected, CreateProject} from './DOM.js'
 import {bgModalWindow} from './background.js'
 import {Store} from './storage.js'
@@ -17,7 +17,7 @@ const newProject = document.querySelector('#addProject')
 const projectModal = document.querySelector('#projectModal')
 const createProject = document.querySelector('#newProject')
 const formProject = document.querySelector('#formProject')
-const projects = document.querySelector('#newProjects')
+const projectList = document.querySelector('#newProjects')
 const listHeader = document.querySelector('#list-header')
 
 
@@ -31,6 +31,10 @@ bgModalWindow() // add index card styling to modal windows, called from backgrou
 export const ALL = InitializeDefaultList() // Initalize the ALL default list
 if(!localStorage.getItem('ALL')) localStorage.setItem('ALL', JSON.stringify(ALL))
 
+export const PROJECTS = InitializeProjectsList()
+if(!localStorage.getItem('PROJECTS')) localStorage.setItem('PROJECTS', JSON.stringify(PROJECTS))
+
+//console.log(PROJECTS)
 
 
 // Activate form modal for user to add a new to-do
@@ -43,16 +47,18 @@ createToDo.addEventListener('click', () => {
     createModal.style.display = 'none'
     let todo = Object.values(formToDo.elements).map(x => x.type == 'checkbox' ? x.checked : x.value),
         todoObj = ToDo(todo)
-    ALL.push(todoObj)       // push new to-do to default ALL list
-    Store('ALL', todoObj)   // store newly created object in localStorage
     // if custom project selected, add to that list as well
     PROJECTS.forEach(project =>     {
         if (project.selected == true)   {
             project.tasks.push(todoObj)
             //ele = CreateToDoItem(todoObj, project)
             todoObj.color = project.color
+            localStorage.setItem('PROJECTS', JSON.stringify(PROJECTS))
         } 
     })
+    ALL.push(todoObj)       // push new to-do to default ALL list
+    Store('ALL', todoObj)   // store newly created object in localStorage
+    console.log(todoObj)
     let ele = CreateToDoItem(todoObj)
     Schedule(todoObj)       // call Schedule from objects.js, will add new to-do into due-date lists
     list.appendChild(ele)
@@ -119,7 +125,9 @@ createProject.addEventListener('click', () =>  {
     let project = Object.values(formProject.elements).map(x => x.value),
         projectObj = new Project(project),
         ele = CreateProject(projectObj)
-    projects.appendChild(ele)
+    projectList.appendChild(ele)
+    PROJECTS.push(projectObj)
+    Store('PROJECTS', projectObj)
     // event listener added to the project DOM element to be a 'clickable' list to where the user can add new to-dos and switch between the default lists and 
     // any other projects the user creates
     ele.addEventListener('click', () => {
@@ -134,22 +142,53 @@ createProject.addEventListener('click', () =>  {
         })
     })
     formProject.reset()
-    console.log(projectObj)
 })
 
-export function InitializeDefaultList()    {
+function InitializeDefaultList()    {
     let objArray = []
     if( localStorage.getItem('ALL') )   {
         let data = JSON.parse(localStorage.getItem('ALL') || [])
         // for each data object in stored array, create a ToDo object and it's DOM element as well as call Schedule to oraganize by due date arrays
         data.forEach(item => {
             let array = Object.values(item),
-                obj = ToDo(array),
-                ele = CreateToDoItem(obj)
+                obj = ToDo(array)
+            if (item.color) obj.color = item.color
+            let ele = CreateToDoItem(obj)
             objArray.push(obj)
             Schedule(obj)
             list.appendChild(ele)
         })
     }
     return objArray
-} 
+}
+
+function InitializeProjectsList()   {
+    if (localStorage.getItem('PROJECTS'))   {
+        let data = JSON.parse(localStorage.getItem('PROJECTS'))
+        //console.log(data)
+        data.forEach(project => {
+            let projectDiv = CreateProject(project)
+            projectList.appendChild(projectDiv)
+            projectDiv.addEventListener('click', () => {
+                listHeader.textContent = `${project.name}'s To-Dos`
+                ClearList(list)
+                Selected(projectDiv.lastChild)
+                PROJECTS.forEach(project => project.selected = false)
+                project.selected = true
+                console.log(project)
+                for (let a = 0; a < project.tasks.length; a++)  {
+                    let array = Object.values(project.tasks[a]),
+                        todoObj = ToDo(array)
+                    if (project.tasks[a].color) todoObj.color = project.tasks[a].color
+                    let todoDiv = CreateToDoItem(todoObj)
+                    list.appendChild(todoDiv)
+                    project.tasks[a] = todoObj
+                }
+            })
+        })
+        
+        return data
+    }
+    else return []
+    //return localStorage.getItem('PROJECTS') ? JSON.parse(localStorage.getItem('PROJECTS')) : []
+}
