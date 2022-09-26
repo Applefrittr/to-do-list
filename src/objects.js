@@ -15,6 +15,7 @@ export const MONTH = []
 // to-do factory function, 5 attributes and 2 methods.  Parameter 'array' passed is a collection of the values pulled from input form createToDo provided by user
 export function ToDo(array) {
 
+
     return  {
         'name': array[0],
         'description': array[1],
@@ -23,17 +24,25 @@ export function ToDo(array) {
         'completed': false,
         del(todo)   {
             todo.parentNode.removeChild(todo)
-            let remove = ALL.indexOf(this)
-            ALL.splice(remove, 1)
+
+            let id = this.id
+            for (let a = 0; a < ALL.length; a++)    {
+                if (ALL[a].id == id)    {
+                    ALL.splice(a, 1)
+                    break
+                }
+            }
+
+            for (let b = 0; b < PROJECTS.length; b++) {
+                for (let c = 0; c < PROJECTS[b].tasks.length; c++ )   {
+                    if (PROJECTS[b].tasks[c].id == id)  {
+                        PROJECTS[b].tasks.splice(c, 1)
+                        break
+                    }
+                }
+            }
             localStorage.setItem('ALL', JSON.stringify(ALL))
-            PROJECTS.forEach(project => {
-                remove = project.tasks.indexOf(this)
-                console.log(remove)
-                if (remove > -1) project.tasks.splice(remove, 1)
-                console.log(project, project.tasks)
-            })
             localStorage.setItem('PROJECTS', JSON.stringify(PROJECTS))
-            console.log(PROJECTS, ALL)
         },
         edit()  {
             modal.style.display ='flex'
@@ -46,15 +55,32 @@ export function ToDo(array) {
             // each time it is clicked, tying it to the current to-do obj for modification.  Eventlisteners would have linked all objects together and edits would 
             // happen to several objects at once.
             edit.onclick = () => {
-                console.log(this, ALL)
-                let update = ALL.indexOf(this)
+                //console.log(this, {ALL}, {PROJECTS})
                 this.name = form.elements[0].value
                 this.description = form.elements[1].value
                 this.dueDate = form.elements[2].value
                 this.priority = form.elements[3].checked
                 modal.style.display = 'none'
-                ALL[update] = this
+                
+                let id = this.id
+                for (let a = 0; a < ALL.length; a++)    {
+                    if (ALL[a].id == id)    {
+                        ALL[a] = this
+                        break
+                    }
+                }
+                for (let b = 0; b < PROJECTS.length; b++) {
+                    for (let c = 0; c < PROJECTS[b].tasks.length; c++ )   {
+                        if (PROJECTS[b].tasks[c].id == id)  {
+                            PROJECTS[b].tasks[c] = this
+                            break
+                        }
+                    }
+                }
+                Schedule(this)
                 localStorage.setItem('ALL', JSON.stringify(ALL))
+                localStorage.setItem('PROJECTS', JSON.stringify(PROJECTS))
+
             }
             return this
         }
@@ -78,7 +104,8 @@ export function Schedule(obj)  {
     let today = new Date(),
         due = new Date(obj.dueDate)
     if (due.getDate() + 1 == today.getDate()) TODAY.push(obj)
+    if (due.getMonth() == today.getMonth()) MONTH.push(obj)
     let week = today.setDate(today.getDate() + 7)
     if (due <= week) WEEK.push(obj)
-    if (due.getMonth() == today.getMonth()) MONTH.push(obj)
+    
 }
