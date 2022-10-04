@@ -38,6 +38,18 @@ export function CreateToDoItem(obj) {
     let newItemDate = document.createElement('p')
     newItemDate.textContent = obj.dueDate
 
+    let descptPreview = document.createElement('div')
+    descptPreview.textContent = obj.description.slice(0, 30) + '...'
+    descptPreview.classList.add('descrpt')
+
+    let descptPopup = document.createElement('div')
+    descptPopup.textContent = obj.description
+    descptPopup.classList.add('popup')
+    descptPreview.addEventListener('mousemove', () => {
+        descptPopup.style.left = '20vw'
+        descptPopup.style.top = '40px'
+    })
+
     let edit = document.createElement('button')
     edit.textContent = 'Edit'
     
@@ -45,9 +57,12 @@ export function CreateToDoItem(obj) {
         let update = obj.edit()
         editBtn.addEventListener('click', () => {
             newItemName.textContent = update.name
+            descptPreview.textContent = update.description.slice(0, 30) + '...'
             newItemDate.textContent = update.dueDate
         })
     })
+
+    descptPreview.appendChild(descptPopup)
     
     let del = document.createElement('button')
     del.textContent = 'Delete'
@@ -56,9 +71,6 @@ export function CreateToDoItem(obj) {
     box2.appendChild(newItemDate)
     box2.appendChild(edit)
     box2.appendChild(del)
-
-    let descptPreview = document.createElement('div')
-    descptPreview.textContent = obj.description.slice(0, 30) + '...'
     
     newItem.appendChild(box1)
     newItem.appendChild(descptPreview)
@@ -66,6 +78,7 @@ export function CreateToDoItem(obj) {
 
     return newItem
 }
+
 
 // Project DOM element.  Used to represent the Project Objects created by the user and displayed on-screen
 export function CreateProject(obj)    {

@@ -19,6 +19,7 @@ const createProject = document.querySelector('#newProject')
 const formProject = document.querySelector('#formProject')
 const projectList = document.querySelector('#newProjects')
 const listHeader = document.querySelector('#list-header')
+const page = document.querySelector('#list')
 
 
 
@@ -54,7 +55,6 @@ createToDo.addEventListener('click', () => {
     PROJECTS.forEach(project =>     {
         if (project.selected == true)   {
             project.tasks.push(todoObj)
-            //ele = CreateToDoItem(todoObj, project)
             todoObj.color = project.color
             localStorage.setItem('PROJECTS', JSON.stringify(PROJECTS))
         } 
@@ -63,7 +63,6 @@ createToDo.addEventListener('click', () => {
     
     Store('ALL', todoObj)   // store newly created object in localStorage
     
-    //console.log(todoObj)
     let ele = CreateToDoItem(todoObj)
     Schedule(todoObj)       // call Schedule from objects.js, will add new to-do into due-date lists
     list.appendChild(ele)
@@ -72,52 +71,67 @@ createToDo.addEventListener('click', () => {
     console.log(ALL, PROJECTS)
 })
 
+page.addEventListener('transitionend', () => page.classList.remove('next-page'))
+
 // Displays all to-do's in the default list ALL
 allList.addEventListener('click',() => {
-    listHeader.textContent = `All To-Dos`
-    ClearList(list)
-    Selected(allList)
-    PROJECTS.forEach(project => project.selected = false)
-    ALL.forEach(obj => {
-        let ele = CreateToDoItem(obj)
-        list.appendChild(ele)
-    })
+    page.classList.add('next-page')
+    setTimeout(function ()   {
+        listHeader.textContent = `All To-Dos`
+        ClearList(list)
+        Selected(allList)
+        PROJECTS.forEach(project => project.selected = false)
+        ALL.forEach(obj => {
+            let ele = CreateToDoItem(obj)
+            list.appendChild(ele)
+        })
+        //page.classList.toggle('next-page')
+    }, 300)
 })
 
 // Displays all to-do's in the default list TODAY
 todayList.addEventListener('click', () => {
-    listHeader.textContent = `Today's To-Dos`
-    ClearList(list)
-    Selected(todayList)
-    PROJECTS.forEach(project => project.selected = false)
-    TODAY.forEach(obj => {
-        let ele = CreateToDoItem(obj)
-        list.appendChild(ele)
-    })
+    page.classList.add('next-page')
+    setTimeout(function ()  {
+        listHeader.textContent = `Today's To-Dos`
+        ClearList(list)
+        Selected(todayList)
+        PROJECTS.forEach(project => project.selected = false)
+        TODAY.forEach(obj => {
+            let ele = CreateToDoItem(obj)
+            list.appendChild(ele)
+        })
+    }, 300)
 })
 
 // Displays all to-do's in the default list THIS WEEK
 weekList.addEventListener('click', () => {
-    listHeader.textContent = `This Week's To-Dos`
-    ClearList(list)
-    Selected(weekList)
-    PROJECTS.forEach(project => project.selected = false)
-    WEEK.forEach(obj => {
-        let ele = CreateToDoItem(obj)
-        list.appendChild(ele)
-    })
+    page.classList.add('next-page')
+    setTimeout(function ()  {
+        listHeader.textContent = `This Week's To-Dos`
+        ClearList(list)
+        Selected(weekList)
+        PROJECTS.forEach(project => project.selected = false)
+        WEEK.forEach(obj => {
+            let ele = CreateToDoItem(obj)
+            list.appendChild(ele)
+        })
+    }, 300)
 })
 
 // Displays all to-do's in the default list THIS MONTH
 monthList.addEventListener('click', () => {
-    listHeader.textContent = `This Month's To-Dos`
-    ClearList(list)
-    Selected(monthList)
-    PROJECTS.forEach(project => project.selected = false)
-    MONTH.forEach(obj => {
-        let ele = CreateToDoItem(obj)
-        list.appendChild(ele)
-    })
+    page.classList.add('next-page')
+    setTimeout(function ()  {
+        listHeader.textContent = `This Month's To-Dos`
+        ClearList(list)
+        Selected(monthList)
+        PROJECTS.forEach(project => project.selected = false)
+        MONTH.forEach(obj => {
+            let ele = CreateToDoItem(obj)
+            list.appendChild(ele)
+        })
+    }, 300)
 })
 
 // Activate project form modal for user to create a new project
@@ -137,15 +151,18 @@ createProject.addEventListener('click', () =>  {
     // event listener added to the project DOM element to be a 'clickable' list to where the user can add new to-dos and switch between the default lists and 
     // any other projects the user creates
     ele.addEventListener('click', () => {
-        listHeader.textContent = `${projectObj.name}'s To-Dos`
-        ClearList(list)
-        Selected(ele.lastChild)
-        PROJECTS.forEach(project => project.selected = false)
-        projectObj.selected = true
-        projectObj.tasks.forEach(obj => {
-            let todo = CreateToDoItem(obj)
-            list.appendChild(todo)
-        })
+        page.classList.add('next-page')
+        setTimeout(function() {
+            listHeader.textContent = `${projectObj.name}'s To-Dos`
+            ClearList(list)
+            Selected(ele.lastChild)
+            PROJECTS.forEach(project => project.selected = false)
+            projectObj.selected = true
+            projectObj.tasks.forEach(obj => {
+                let todo = CreateToDoItem(obj)
+                list.appendChild(todo)
+            })
+        }, 300)
     })
     formProject.reset()
 })
@@ -156,15 +173,18 @@ function InitializeProjectsList()   {
         let projectDiv = CreateProject(project)
         projectList.appendChild(projectDiv)
         projectDiv.addEventListener('click', () => {
-            listHeader.textContent = `${project.name}'s To-Dos`
-            ClearList(list)
-            Selected(projectDiv.lastChild)
-            PROJECTS.forEach(project => project.selected = false)
-            project.selected = true
-            project.tasks.forEach(task =>   {
-                let todoDiv = CreateToDoItem(task)
-                list.appendChild(todoDiv)
-            })
+            page.classList.add('next-page')
+            setTimeout(function()   {
+                listHeader.textContent = `${project.name}'s To-Dos`
+                ClearList(list)
+                Selected(projectDiv.lastChild)
+                PROJECTS.forEach(project => project.selected = false)
+                project.selected = true
+                project.tasks.forEach(task =>   {
+                    let todoDiv = CreateToDoItem(task)
+                    list.appendChild(todoDiv)
+                })
+            }, 300)
         })
     })
 }

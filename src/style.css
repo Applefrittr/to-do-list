@@ -1,24 +1,26 @@
 *   {
     box-sizing: border-box;
     margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 body    {
     display: flex;
     justify-content: center;
-    height: 150vh;
+    min-height: 100vh;
+    position: relative; 
 }
 
 #container  {
     display: grid;
-    width: 80vw;
-    height: 100%;
-    background-color: #FAF441;
+    width: 70vw;
+    background-color: #FFF36D;
     grid-template-rows: 100px 1fr;
     grid-template-columns: 1fr 4fr;
     border-right: solid black 1px;
     border-top: solid black 1px;
     border-left: solid black 1px;
+    background-image: url("lined-paper-2.png");
 }
 
 #header {
@@ -31,6 +33,7 @@ body    {
     display:flex;
     align-items: center;
     padding: 0 2rem;
+    z-index: 1;
 }
 
 #navSideBar {
@@ -43,6 +46,7 @@ body    {
     display: flex;
     flex-direction: column;
     gap: 3rem;
+
 }
 
 .navContainer>h4 ,
@@ -69,6 +73,13 @@ h4:hover    {
     padding-top: 10rem;
     padding-left: 2rem;
     padding-right: 2rem;
+    background-color: #FFF36D;
+    background-image: url("lined-paper-2.png");
+    transition: opacity linear .25s;
+}
+
+.next-page  {
+    opacity: 0;
 }
 
 #addNewToDo {
@@ -81,20 +92,19 @@ h4:hover    {
     align-items: center;
     background-color: rgba(0, 0, 0, .3);
     position: absolute;
-    left: 0;
     top: 0;
-    height: 100vh;
+    left: 0;
+    bottom: 0;
     width: 100%;
 }
 
 .modalWindow    {
     width: 700px;
-    height: 325px;
+    height: 375px;
     background-color: white;
     display:grid;
     grid-template-rows: 1.50fr repeat(7, 1fr);
     position: relative;
-
 }
 
 .modal>div>div  {
@@ -107,7 +117,6 @@ h4:hover    {
     width: 100%;
     padding: 1rem 3rem;
     justify-content: space-between;
-    position: relative;
     transition: transform .5s, border 2s;
 }
 
@@ -129,8 +138,8 @@ h4:hover    {
 
 form    {
     position: absolute;
-    z-index: 1;
-    top: 1.5rem;
+    z-index: 2;
+    top: 2rem;
     display:flex;
     flex-direction: column;
     gap: 1rem;
@@ -168,7 +177,7 @@ input[type="checkbox"]  {
     border: solid gray 1px;
     border-radius: 50%;
     height: auto;
-    color: navy;    
+    color: navy;   
 }
 
 input[type="checkbox"]::before {
@@ -202,3 +211,18 @@ input[type="checkbox"]:checked::before {
     margin-right: -10px;
 }
 
+.descrpt:hover .popup   {
+    
+    opacity: 1;
+}
+
+.popup  {
+    position: absolute;
+    
+    background-color: white;
+    padding: 1rem;
+    height: auto;
+    z-index: 1000;
+    opacity: 0;
+    transition: ease-in .25s;
+}

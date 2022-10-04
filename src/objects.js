@@ -33,6 +33,26 @@ export function ToDo(array) {
                 }
             }
 
+            for (let a = 0; a < TODAY.length; a++)    {
+                if (TODAY[a].id == id)    {
+                    TODAY.splice(a, 1)
+                    break
+                }
+            }
+
+            for (let a = 0; a < WEEK.length; a++)    {
+                if (WEEK[a].id == id)    {
+                    WEEK.splice(a, 1)
+                    break
+                }
+            }
+            for (let a = 0; a < MONTH.length; a++)    {
+                if (MONTH[a].id == id)    {
+                    MONTH.splice(a, 1)
+                    break
+                }
+            }
+
             for (let b = 0; b < PROJECTS.length; b++) {
                 for (let c = 0; c < PROJECTS[b].tasks.length; c++ )   {
                     if (PROJECTS[b].tasks[c].id == id)  {
@@ -77,7 +97,6 @@ export function ToDo(array) {
                         }
                     }
                 }
-                Schedule(this)
                 localStorage.setItem('ALL', JSON.stringify(ALL))
                 localStorage.setItem('PROJECTS', JSON.stringify(PROJECTS))
 
