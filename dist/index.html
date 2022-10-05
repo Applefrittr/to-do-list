@@ -34,16 +34,20 @@
         <!-- The create new to-do modal -->
         <div class="modal">
             <div id="createToDoWindow" class="modalWindow">
-                <legend>New*</legend>
+                <div class="modal-header">
+                    <legend>New*</legend>
+                    <img src="../src/close.png" alt="Close" class="close" height="30" width="30">
+                </div>
                 <form action="" id="formToDo">
-                    <div class="inputs">
+                    <div class="inputs" id="createToDoName">
+                        <div></div>
                         <input type="text" id="name" placeholder="Task name..." maxlength="18">
                     </div>
                     <div class="inputs">
                         <textarea id="description" rows="9" placeholder="Notes..."></textarea>
                     </div>
                     <div class="datePrioBox">
-                        <div>
+                        <div id="createToDoDate">
                             <label for="dueDate">Due Date</label>
                             <input type="date" id="dueDate">
                         </div>
@@ -60,7 +64,10 @@
         <!-- The edit existing to-do modal -->
         <div class="modal" id="editModal">
             <div id="editToDoWindow" class="modalWindow">
-                <legend>Edit</legend>
+                <div class="modal-header">
+                    <legend>Edit*</legend>
+                    <img src="../src/close.png" alt="Close" class="close" height="30" width="30">
+                </div>
                 <form action="" id="formEditToDo">
                     <div class="inputs">
                         <input type="text" id="name" maxlength="18">
@@ -86,9 +93,13 @@
         <!-- Create New Project Modal-->
         <div class="modal" id="projectModal">
             <div id="projectWindow" class="modalWindow">
-                <legend>New List*</legend>
+                <div class="modal-header">
+                    <legend>New List*</legend>
+                    <img src="../src/close.png" alt="Close" class="close" height="30" width="30">
+                </div>
                 <form action="" id="formProject">
-                    <div class="inputs">
+                    <div class="inputs" id="projectName">
+                        <div></div>
                         <input type="text" id="name" placeholder="List name..." maxlength="15">
                     </div>
                     <div class="inputs">

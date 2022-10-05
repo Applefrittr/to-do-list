@@ -8,6 +8,7 @@ const newToDo = document.querySelector('#addNewToDo')
 const createModal = document.querySelector('.modal')
 const createToDo = document.querySelector('#createToDo')
 const formToDo = document.querySelector('#formToDo')
+const editModal = document.querySelector('#editModal')
 const list = document.querySelector('#newToDo')
 const allList = document.querySelector('#all')
 const todayList = document.querySelector('#today')
@@ -20,10 +21,15 @@ const formProject = document.querySelector('#formProject')
 const projectList = document.querySelector('#newProjects')
 const listHeader = document.querySelector('#list-header')
 const page = document.querySelector('#list')
+const close = document.querySelectorAll('.close')
+
+const todoName = document.querySelector('#createToDoName')
+const todoDate = document.querySelector('#createToDoDate')
+const projectName = document.querySelector('#projectName')
 
 
 
-bgModalWindow() // add index card styling to modal windows, called from background.js
+//bgModalWindow() // add index card styling to modal windows, called from background.js
 
 
 /////////////////  Storage API retrieval on page load //////////////////////
@@ -47,10 +53,22 @@ newToDo.addEventListener('click', () => {
 
 // Closes modal then captures user input and creates a new to-do object along with it's DOM representation.  Also stores newly created object in local storage element 'ALL'
 createToDo.addEventListener('click', () => {
+    let todo = Object.values(formToDo.elements).map(x => x.type == 'checkbox' ? x.checked : x.value)
+
+    if(!todo[0]) {
+        ErrorMsg(todoName, 'Please enter a name for the task')
+        return
+    }
+    
+    if(!todo[2]) {
+        ErrorMsg(todoDate, 'Enter a due date')
+        return
+    }    
+    
+
     createModal.style.display = 'none'
-    let todo = Object.values(formToDo.elements).map(x => x.type == 'checkbox' ? x.checked : x.value),
-        todoObj = ToDo(todo)
-        todoObj.id = Math.floor(Math.random() * 100000)
+    let todoObj = ToDo(todo)
+    todoObj.id = Math.floor(Math.random() * 100000)  // Unique ID created for each to-do to help with storage retrieval and 'edit' and 'delete' functionality after page reload
     // if custom project selected, add to that list as well
     PROJECTS.forEach(project =>     {
         if (project.selected == true)   {
@@ -68,7 +86,6 @@ createToDo.addEventListener('click', () => {
     list.appendChild(ele)
     
     formToDo.reset()        // reset input fields in the form for next use
-    console.log(ALL, PROJECTS)
 })
 
 page.addEventListener('transitionend', () => page.classList.remove('next-page'))
@@ -141,9 +158,15 @@ newProject.addEventListener('click', () => {
 
 // Closes new project modal then captures user input and creates a new project object along with it's DOM representation
 createProject.addEventListener('click', () =>  {
+    let project = Object.values(formProject.elements).map(x => x.value)
+    
+    if (!project[0])    {
+        ErrorMsg(projectName, 'Choose a name for the project')
+        return
+    }
+
     projectModal.style.display = 'none'
-    let project = Object.values(formProject.elements).map(x => x.value),
-        projectObj = new Project(project),
+    let projectObj = new Project(project),
         ele = CreateProject(projectObj)
     projectList.appendChild(ele)
     PROJECTS.push(projectObj)
@@ -165,6 +188,22 @@ createProject.addEventListener('click', () =>  {
         }, 300)
     })
     formProject.reset()
+})
+
+// Functionality for close 'X' on the modal pop-up windows on each of the forms.  Also deletes left over error messages
+close.forEach(x => {
+    x.addEventListener('click', () => {
+        createModal.style.display = 'none'
+        projectModal.style.display = 'none'
+        editModal.style.display = 'none'
+        
+        if (todoName.childElementCount > 2) todoName.removeChild(todoName.lastChild)
+        if (todoDate.childElementCount > 2) todoDate.removeChild(todoDate.lastChild)
+        if (projectName.childElementCount > 2) projectName.removeChild(projectName.lastChild)
+
+        formToDo.reset()
+        formProject.reset()
+    })
 })
 
 function InitializeProjectsList()   {
@@ -223,4 +262,32 @@ function Initialize()    {
         return [dataAll, dataProjects]
     }
     return [[], []]
+}
+
+// function that detects either missing name or date from newly created todo's and projects.  Creates pop error messages
+export function ErrorMsg(node, msg) {
+    if (node.childElementCount > 2) {
+        node.lastChild.classList.add('shake')
+        setTimeout(() => {
+            node.lastChild.classList.remove('shake')
+        }, 260)
+        return
+    }
+    else {
+        let popup = document.createElement('div')
+        popup.classList.add('name-error')
+        popup.textContent = msg
+
+        if(node == todoDate) {
+            popup.style.left = '25px'
+            popup.style.top = '-30px'
+        }
+
+        node.appendChild(popup)
+        node.onclick = () => {
+            node.removeChild(popup)
+            node.onclick = null
+        }
+    }
+    return
 }

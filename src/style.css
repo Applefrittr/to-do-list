@@ -106,11 +106,11 @@ h4:hover    {
     grid-template-rows: 1.50fr repeat(7, 1fr);
     position: relative;
 }
-
+/*
 .modal>div>div  {
     opacity: .2;
 }
-
+*/
 
 .todo   {
     display: flex;
@@ -225,4 +225,49 @@ input[type="checkbox"]:checked::before {
     z-index: 1000;
     opacity: 0;
     transition: ease-in .25s;
+}
+
+.modal-header   {
+    display: flex;
+    justify-content: space-between;
+    padding: .5rem;    
+}
+
+legend  {
+    padding: .15rem;
+}
+
+.close  {
+    transition: scale .25s;
+}
+
+.close:hover    {
+    scale: 1.25;
+    cursor: pointer;
+}
+
+#createToDoName,
+#createToDoDate   {
+    position: relative;
+}
+
+.name-error {
+    position:absolute;
+    background-color: #FFF36D;
+    top: 30px;
+    left: 15px;
+    z-index: 1;
+    padding: 5px;
+}
+
+.shake  {
+    animation: shake .25s;
+
+}
+@keyframes shake {
+    0% { transform: translate(5px);}
+    33% { transform: translate(-10px);}
+    66% { transform: translate(10px);}
+    100% { transform: translate(-5px);}
+
 }
