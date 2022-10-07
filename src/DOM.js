@@ -1,3 +1,5 @@
+import FLAG from './flag.png'
+
 const editBtn = document.querySelector('#editToDo')
 
 // DOM created element which represents a to-do object.  Edit and Delete buttons call methods repsectively from the to-do object itself and update DOM accordingly
@@ -5,8 +7,17 @@ export function CreateToDoItem(obj) {
     let newItem = document.createElement('div')
     newItem.classList.add('todo')
 
+    obj.passDue() ? newItem.classList.add('pass-due') : newItem.classList.remove('pass-due')
+
     let box1 = document.createElement('div')
     box1.classList.add('todobox')
+
+    let flag = document.createElement('img')
+    flag.classList.add('flag')
+    if (obj.priority) flag.classList.add('flagged')
+    flag.src = FLAG
+    flag.style.height = '20px'
+    flag.style.width = '20px'
 
     let checkbox = document.createElement('input')
     checkbox.type = 'checkbox'
@@ -18,11 +29,14 @@ export function CreateToDoItem(obj) {
     checkbox.addEventListener('click', () => {
         newItem.classList.toggle('complete')
         obj.completed = !obj.completed
+
+        ////////////////////
     })
 
     let newItemName = document.createElement('p')
     newItemName.textContent = obj.name
 
+    box1.appendChild(flag)
     box1.appendChild(checkbox)
     if (obj.color)    {
         let color = document.createElement('div')
@@ -50,6 +64,8 @@ export function CreateToDoItem(obj) {
         descptPopup.style.top = '40px'
     })
 
+    descptPreview.appendChild(descptPopup)
+
     let edit = document.createElement('button')
     edit.textContent = 'Edit'
     
@@ -59,6 +75,18 @@ export function CreateToDoItem(obj) {
             newItemName.textContent = update.name
             descptPreview.textContent = update.description.slice(0, 30) + '...'
             newItemDate.textContent = update.dueDate
+            update.priority ? flag.classList.add('flagged') : flag.classList.remove('flagged')
+            let descptPopup = document.createElement('div')
+            descptPopup.textContent = obj.description
+            descptPopup.classList.add('popup')
+            descptPreview.addEventListener('mousemove', () => {
+                descptPopup.style.left = '20vw'
+                descptPopup.style.top = '40px'
+            })
+            descptPreview.appendChild(descptPopup)
+            console.log(update)
+            update.passDue() ? newItem.classList.add('pass-due') : newItem.classList.remove('pass-due')
+
         })
     })
 

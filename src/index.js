@@ -73,7 +73,7 @@ createToDo.addEventListener('click', () => {
     PROJECTS.forEach(project =>     {
         if (project.selected == true)   {
             project.tasks.push(todoObj)
-            todoObj.color = project.color
+            todoObj.color = project.color // create and set a new property 'color' for the object, match it to the projects color
             localStorage.setItem('PROJECTS', JSON.stringify(PROJECTS))
         } 
     })
@@ -242,6 +242,7 @@ function Initialize()    {
                             todoObj = ToDo(array)
                             todoObj.color = dataAll[a].color
                             todoObj.id = dataAll[a].id
+                            todoObj.completed = dataAll[a].completed
                             dataAll[a] = todoObj
                             project.tasks[i] = todoObj
                             break
@@ -253,6 +254,7 @@ function Initialize()    {
                 todoObj = ToDo(array)
                 todoObj.color = dataAll[a].color
                 todoObj.id = dataAll[a].id
+                todoObj.completed = dataAll[a].completed
                 dataAll[a] = todoObj
                 let ele = CreateToDoItem(todoObj)
                 Schedule(todoObj)

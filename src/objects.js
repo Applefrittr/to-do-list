@@ -12,7 +12,7 @@ export const MONTH = []
 
 
 
-// to-do factory function, 5 attributes and 2 methods.  Parameter 'array' passed is a collection of the values pulled from input form createToDo provided by user
+// to-do factory function, 5 attributes and 3 methods.  Parameter 'array' passed is a collection of the values pulled from input form createToDo provided by user
 export function ToDo(array) {
 
 
@@ -22,6 +22,13 @@ export function ToDo(array) {
         'dueDate': array[2],
         'priority': array[3],
         'completed': false,
+        passDue()   {
+            let today = new Date(),
+                due = new Date(this.dueDate),
+                deadline = new Date()
+                deadline.setDate(today.getDate() - 1)
+            return deadline > due ? true : false
+        },
         del(todo)   {
             todo.parentNode.removeChild(todo)
 
@@ -97,6 +104,29 @@ export function ToDo(array) {
                         }
                     }
                 }
+
+                for (let a = 0; a < TODAY.length; a++)    {
+                    if (TODAY[a].id == id)    {
+                        TODAY.splice(a, 1)
+                        break
+                    }
+                }
+    
+                for (let a = 0; a < WEEK.length; a++)    {
+                    if (WEEK[a].id == id)    {
+                        WEEK.splice(a, 1)
+                        break
+                    }
+                }
+                for (let a = 0; a < MONTH.length; a++)    {
+                    if (MONTH[a].id == id)    {
+                        MONTH.splice(a, 1)
+                        break
+                    }
+                }
+
+                Schedule(this)
+
                 localStorage.setItem('ALL', JSON.stringify(ALL))
                 localStorage.setItem('PROJECTS', JSON.stringify(PROJECTS))
 
