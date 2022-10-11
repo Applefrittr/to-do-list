@@ -1,6 +1,6 @@
 import './style.css'
 import {ToDo, Project, Schedule, TODAY, WEEK, MONTH} from './objects.js'
-import {CreateToDoItem, ClearList, Selected, CreateProject} from './DOM.js'
+import {CreateToDoItem, ClearList, Selected, CreateProject, ProjectNotes} from './DOM.js'
 import {bgModalWindow} from './background.js'
 import {Store} from './storage.js'
 
@@ -185,6 +185,8 @@ createProject.addEventListener('click', () =>  {
                 let todo = CreateToDoItem(obj)
                 list.appendChild(todo)
             })
+            let notes = ProjectNotes(project)
+            list.appendChild(notes)
         }, 300)
     })
     formProject.reset()
@@ -214,6 +216,7 @@ function InitializeProjectsList()   {
         projectDiv.addEventListener('click', () => {
             page.classList.add('next-page')
             setTimeout(function()   {
+                console.log(project)
                 listHeader.textContent = `${project.name}'s To-Dos`
                 ClearList(list)
                 Selected(projectDiv.lastChild)
@@ -223,6 +226,8 @@ function InitializeProjectsList()   {
                     let todoDiv = CreateToDoItem(task)
                     list.appendChild(todoDiv)
                 })
+                let notes = ProjectNotes(project)
+                list.appendChild(notes)
             }, 300)
         })
     })

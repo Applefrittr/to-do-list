@@ -76,6 +76,7 @@ h4:hover    {
     background-color: #FFF36D;
     background-image: url("lined-paper-2.png");
     transition: opacity linear .25s;
+    position: relative;
 }
 
 .next-page  {
@@ -130,6 +131,11 @@ h4:hover    {
     display: flex;
     gap: 1rem;
     align-items: center;
+}
+
+.pass-due   {
+    color: red;
+    font-style: italic;
 }
 
 .complete   {
@@ -271,11 +277,6 @@ legend  {
 
 }
 
-.pass-due   {
-    color: red;
-    font-style: italic;
-}
-
 .flag   {
     margin-left: -2rem;
     visibility: hidden;
@@ -283,4 +284,29 @@ legend  {
 
 .flagged    {
     visibility: visible;
+}
+
+.project-notes  {
+    position: absolute;
+    top: 10rem;
+    right: 2rem;
+    width: 25%;
+}
+
+.project-notes>h2   {
+    text-align: center;
+}
+
+.project-notes-text {
+    display:block;
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height .10s;
+    background-color: white;
+}
+
+.project-notes:hover .project-notes-text  {
+   max-height: 500px;
+   padding:1rem;
+    
 }

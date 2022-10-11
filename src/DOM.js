@@ -1,4 +1,5 @@
 import FLAG from './flag.png'
+import {ALL, PROJECTS} from './index.js'
 
 const editBtn = document.querySelector('#editToDo')
 
@@ -30,7 +31,26 @@ export function CreateToDoItem(obj) {
         newItem.classList.toggle('complete')
         obj.completed = !obj.completed
 
-        ////////////////////
+        let id = obj.id
+        for (let a = 0; a < ALL.length; a++) {
+            if (ALL[a].id == id) {
+                ALL[a] = obj
+                break
+            }
+        }
+
+        for (let b = 0; b < PROJECTS.length; b++) {
+            for (let c = 0; c < PROJECTS[b].tasks.length; c++ )   {
+                if (PROJECTS[b].tasks[c].id == id)  {
+                    PROJECTS[b].tasks[c] = obj
+                    break
+                }
+            }
+        }
+
+        localStorage.setItem('ALL', JSON.stringify(ALL))
+        localStorage.setItem('PROJECTS', JSON.stringify(PROJECTS))
+
     })
 
     let newItemName = document.createElement('p')
@@ -50,7 +70,8 @@ export function CreateToDoItem(obj) {
     box2.classList.add('todobox')
 
     let newItemDate = document.createElement('p')
-    newItemDate.textContent = obj.dueDate
+    let date = new Date(obj.dueDate).toDateString()
+    newItemDate.textContent = date
 
     let descptPreview = document.createElement('div')
     descptPreview.textContent = obj.description.slice(0, 30) + '...'
@@ -138,4 +159,22 @@ export function Selected(list)  {
     let notSelected = document.querySelector('.selected')
     notSelected.classList.remove('selected')
     list.classList.add('selected')
+}
+
+// Creates a DOM element to display the project's notes.
+export function ProjectNotes(obj)  {
+    let container = document.createElement('div')
+    container.classList.add('project-notes')
+
+    let header = document.createElement('h2')
+    header.textContent = 'Notes'
+
+    let text = document.createElement('div')
+    text.textContent = obj.notes
+    text.classList.add('project-notes-text')
+
+    container.appendChild(header)
+    container.appendChild(text)
+
+    return container
 }
