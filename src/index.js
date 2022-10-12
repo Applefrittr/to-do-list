@@ -185,7 +185,7 @@ createProject.addEventListener('click', () =>  {
                 let todo = CreateToDoItem(obj)
                 list.appendChild(todo)
             })
-            let notes = ProjectNotes(project)
+            let notes = ProjectNotes(projectObj)
             list.appendChild(notes)
         }, 300)
     })
